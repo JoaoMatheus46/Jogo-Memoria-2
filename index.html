@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>God of War - Jogo da Memória</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>GOD OF WAR</h1>
+            <div class="linha"></div>
+            <p>JOGO DA MEMÓRIA DOS DEUSES</p>
+        </header>
+
+        <section class="painel">
+
+            <div class="info">
+                <span>Jogadas</span>
+                <strong id="jogadas">0</strong>
+            </div>
+
+            <div class="info">
+                <span>Tempo</span>
+                <strong id="tempo">00:00</strong>
+            </div>
+
+            <div class="info">
+                <span>Pares</span>
+                <strong id="pares">0 / 6</strong>
+            </div>
+
+        </section>
+
+        <main class="tabuleiro" id="tabuleiro">
+        </main>
+
+        <button class="botao" id="reiniciar">
+            ↻ REINICIAR JOGO
+        </button>
+
+        <div class="rodape">
+            ENCONTRE OS 6 PARES E CONQUISTE SUA VITÓRIA
+        </div>
+
+    </div>
+
+    <!-- TELA DE VITÓRIA -->
+
+    <div class="overlay" id="overlay">
+
+        <div class="modal">
+
+            <div class="trofeu">🏆</div>
+
+            <h2>VITÓRIA, GUERREIRO!</h2>
+
+            <p>
+                Você encontrou todos os pares e completou o desafio!
+            </p>
+
+            <div class="resultados">
+
+                <p>Jogadas: <strong id="resultadoJogadas">0</strong></p>
+
+                <p>Tempo: <strong id="resultadoTempo">00:00</strong></p>
+
+                <p>Pares encontrados: <strong>6 / 6</strong></p>
+
+            </div>
+
+            <button class="botao" id="jogarNovamente">
+                JOGAR NOVAMENTE
+            </button>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

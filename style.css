@@ -1,0 +1,333 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+
+    background:
+        radial-gradient(ellipse at top, #54251d 0%, transparent 55%),
+        linear-gradient(135deg, #100d0c, #251512 50%, #0c0b0a);
+
+    padding: 30px 15px;
+}
+
+.container {
+    max-width: 850px;
+    margin: auto;
+    text-align: center;
+}
+
+header {
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 5vw, 46px);
+    color: #d7a35a;
+    text-shadow: 0 3px 15px #a33d20;
+    letter-spacing: 3px;
+}
+
+header p {
+    color: #c5b6a5;
+    margin-top: 10px;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+.linha {
+    width: 100px;
+    height: 3px;
+    margin: 18px auto;
+    background: linear-gradient(to right, transparent, #c58b45, transparent);
+}
+
+/* PAINEL */
+
+.painel {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.info {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(207,153,85,0.3);
+    border-radius: 12px;
+    padding: 15px 8px;
+    backdrop-filter: blur(8px);
+}
+
+.info span {
+    display: block;
+    color: #bba68f;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.info strong {
+    font-size: 24px;
+    color: #e7b46e;
+}
+
+/* TABULEIRO */
+
+.tabuleiro {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    perspective: 1000px;
+}
+
+.carta {
+    height: 145px;
+    cursor: pointer;
+    perspective: 1000px;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+.carta-interna {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.carta.virada .carta-interna,
+.carta.encontrada .carta-interna {
+    transform: rotateY(180deg);
+}
+
+.frente,
+.verso {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    backface-visibility: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 2px solid #916638;
+}
+
+.verso {
+    background: linear-gradient(145deg, #45231b, #1b1210);
+    box-shadow: 0 5px 15px #0008;
+}
+
+.verso::before {
+    content: "Ω";
+    font-family: 'Cinzel', serif;
+    font-size: 55px;
+    color: #d5a35e;
+    text-shadow: 0 0 15px #c77c32;
+}
+
+.frente {
+    transform: rotateY(180deg);
+    background: linear-gradient(145deg, #30221a, #15110f);
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: inset 0 0 20px #b07b3c22;
+}
+
+.simbolo {
+    font-size: 52px;
+    filter: drop-shadow(0 0 10px #d18b39);
+}
+
+.nome {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    color: #e6b875;
+    letter-spacing: 1px;
+}
+
+.carta.encontrada .frente {
+    border-color: #62a66a;
+    background: linear-gradient(145deg, #1c3926, #101c14);
+}
+
+.carta.encontrada {
+    cursor: default;
+    opacity: 0.85;
+}
+
+.carta:not(.encontrada):hover .carta-interna {
+    transform: translateY(-5px);
+}
+
+.carta.virada:hover .carta-interna,
+.carta.encontrada:hover .carta-interna {
+    transform: rotateY(180deg);
+}
+
+/* BOTÕES */
+
+.botao {
+    margin-top: 30px;
+    padding: 14px 35px;
+    border: 1px solid #d6a35c;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #9c4927, #542016);
+    color: white;
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.botao:hover {
+    background: linear-gradient(135deg, #c66a35, #7d301b);
+    transform: scale(1.04);
+    box-shadow: 0 0 20px #bd6c35;
+}
+
+/* TELA DE VITÓRIA */
+
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 10;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.overlay.ativo {
+    display: flex;
+}
+
+.modal {
+    width: 100%;
+    max-width: 420px;
+    padding: 35px 25px;
+    text-align: center;
+    background: linear-gradient(145deg, #392017, #15100e);
+    border: 2px solid #c18b4d;
+    border-radius: 15px;
+    box-shadow: 0 0 40px #a34e23;
+    animation: aparecer 0.5s ease;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal h2 {
+    font-family: 'Cinzel', serif;
+    color: #e7b46e;
+    font-size: 27px;
+    margin-bottom: 15px;
+}
+
+.modal .trofeu {
+    font-size: 65px;
+    margin-bottom: 15px;
+}
+
+.modal p {
+    color: #d2c1ae;
+    line-height: 1.7;
+}
+
+.resultados {
+    margin: 20px 0;
+    padding: 15px;
+    background: #ffffff0c;
+    border-radius: 10px;
+    line-height: 2;
+}
+
+.resultados strong {
+    color: #e7b46e;
+}
+
+.rodape {
+    margin-top: 25px;
+    font-size: 11px;
+    color: #867567;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 20px 10px;
+    }
+
+    .tabuleiro {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .carta {
+        height: 120px;
+    }
+
+    .simbolo {
+        font-size: 38px;
+    }
+
+    .verso::before {
+        font-size: 43px;
+    }
+
+    .info {
+        padding: 12px 5px;
+    }
+
+    .info span {
+        font-size: 10px;
+    }
+
+    .info strong {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 360px) {
+
+    .carta {
+        height: 100px;
+    }
+
+    .simbolo {
+        font-size: 32px;
+    }
+
+    .nome {
+        font-size: 8px;
+    }
+}
